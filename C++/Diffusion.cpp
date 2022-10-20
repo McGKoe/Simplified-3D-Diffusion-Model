@@ -8,7 +8,12 @@ using namespace std;
 int main()
 {
 
-	int maxsize = 10;
+	cout << "What is the size of the room? ";
+
+	int maxsize = 0;
+	
+	cin >> maxsize;
+
 	double cube[maxsize][maxsize][maxsize];
 
 	/* Zero the cube */
@@ -105,8 +110,10 @@ int main()
                 cout <<        " " << sumval << "\n";
 	} while ( ratio < 0.99 );
 
+
 		cout << "Box equilibrated in " << time << " seconds of simulated time.";
 	
 		return 0;
 
 }
+
