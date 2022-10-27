@@ -65,14 +65,17 @@ allocate (cube (maxsize, maxsize, maxsize))
 
 
 !zeroing the cube
-do i = 1, maxsize
-        do j = 1, maxsize
-                do k = 1, maxsize
-                        cube(i,j,k) = 0
 
-                end do
-        end do
-end do
+cube = 0.0
+
+!do i = 1, maxsize
+ !       do j = 1, maxsize
+  !              do k = 1, maxsize
+   !                     cube(i,j,k) = 0
+
+    !            end do
+     !   end do
+!end do
 
 
 !initialize first cell
@@ -98,10 +101,10 @@ do while (ratio < 0.99)
 
 
 
-                                                        change = (cube(i, j, k) - cube(l, m, n)) * DTerm
+                                                        change = (cube(k, j, i) - cube(n, m, l)) * DTerm
 
-                                                        cube(i,j,k) = cube(i,j,k) - change
-                                                        cube(l,m,n) = cube(l,m,n) + change
+                                                        cube(k,j,i) = cube(k,j,i) - change
+                                                        cube(n,m,l) = cube(n,m,l) + change
 
 
 
@@ -116,29 +119,32 @@ do while (ratio < 0.99)
         time = time + timestep
 
 
-        sumval = 0.0
-        maxx = cube(1,1,1)
-        minn = cube(1,1,1)
+        sumval = sum(cube)
+        maxx = maxval(cube)
+        !cube(1,1,1)
+        minn = minval(cube)
+        !cube(1,1,1)
        
 
  
-          do i = 1, maxsize
-                do j = 1, maxsize
-                        do k = 1, maxsize
+!          do i = 1, maxsize
+ !               do j = 1, maxsize
+!                        do k = 1, maxsize
 
-                                maxx = max(cube(i,j,k), maxx)
-                                minn = min(cube(i,j,k), minn)
+ !                               maxx = max(cube(i,j,k), maxx)
+  !                              minn = min(cube(i,j,k), minn)
 
-                                sumval = sumval + cube(i,j,k)
+   !                             sumval = sumval + cube(i,j,k)
 
-                        end do
-                end do
-          end do
+    !                    end do
+     !           end do
+      !    end do
 
 
         ratio = minn/maxx
 
 
+        print*, ratio
 
         print*, "Time: ", time
        
