@@ -1,6 +1,10 @@
 #include<iostream>
 #include<fstream>
 #include <cmath>
+#include <stdio.h>
+#include <stdlib.h>
+
+
 
 using namespace std;
 
@@ -8,13 +12,30 @@ using namespace std;
 int main()
 {
 
-	cout << "What is the size of the room? ";
+	cout << "Number of Divisions in the room:  ";
 
-	int maxsize = 0;
+	int maxsize  = 10; 
 	
 	cin >> maxsize;
 
-	double cube[maxsize][maxsize][maxsize];
+//	double cube[maxsize][maxsize][maxsize];
+
+
+	//allocating memeory
+	double*** cube =  new double** [maxsize];
+
+	for (int i = 0; i < maxsize; ++i) 
+	{
+		cube[i] = new double* [maxsize];
+      		for (int j = 0; j < maxsize; j++) 
+		{
+          		cube[i][j] = new double [maxsize];
+          	}
+     	}
+
+
+
+
 
 	/* Zero the cube */
 
@@ -28,7 +49,7 @@ int main()
 	}
 
 	double diffusion_coefficient = 0.175;
-	double room_dimension = 5;                      // 5 Meters
+	double room_dimension = 5;                     // 5 Meters
 	double speed_of_gas_molecules = 250.0;          // Based on 100 g/mol gas at RT
 	double timestep = (room_dimension / speed_of_gas_molecules) / maxsize; // h in seconds
 	double distance_between_blocks = room_dimension / maxsize;
@@ -112,6 +133,23 @@ int main()
 
 
 		cout << "Box equilibrated in " << time << " seconds of simulated time.";
+
+
+	//deallocating memeory
+	for (int i=0; i<maxsize; i++ ) 
+	{
+	        for (int j=0; j<maxsize; j++ ) 
+		{
+        	    	delete[] cube[i][j];
+        	}
+        	delete[] cube[i];
+    	}
+    	delete[] cube;
+
+
+
+
+
 	
 		return 0;
 
