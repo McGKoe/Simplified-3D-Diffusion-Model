@@ -18,7 +18,20 @@ int main()
 	
 	cin >> maxsize;
 
-//	double cube[maxsize][maxsize][maxsize];
+
+	cout << "With patition? (y/n)";
+
+	char answer;
+
+	cin >> answer;
+
+
+	bool partition;
+
+	if(answer == 'y')
+	{
+		partition = true;
+	}
 
 
 	//allocating memeory
@@ -68,82 +81,207 @@ int main()
 	double ratio = 0.0;
 
 
-	do {
+	if(!partition)
+	{
+		do {
 
-
-		for (int i=0; i<maxsize; i++) 
-		{
-                	for (int j=0; j<maxsize; j++) 
+			for (int i=0; i<maxsize; i++) 
 			{
-                        	for (int k=0; k<maxsize; k++) 
+                		for (int j=0; j<maxsize; j++) 
 				{
-                                	for (int l=0; l<maxsize; l++) 
+                        		for (int k=0; k<maxsize; k++) 
 					{
-                                        	for (int m=0; m<maxsize; m++) 
+                                		for (int l=0; l<maxsize; l++) 
 						{
-                                                	for (int n=0; n<maxsize; n++) 
+                                        		for (int m=0; m<maxsize; m++) 
 							{
-                                                        	if (    ( ( i == l )   && ( j == m )   && ( k == n+1) ) ||
-                                                                	( ( i == l )   && ( j == m )   && ( k == n-1) ) ||
-                                                                	( ( i == l )   && ( j == m+1 ) && ( k == n)   ) ||
-                                                                	( ( i == l )   && ( j == m-1 ) && ( k == n)   ) ||
-                                                                	( ( i == l+1 ) && ( j == m )   && ( k == n)   ) ||
-                                                                	( ( i == l-1 ) && ( j == m )   && ( k == n)   ) ) 
+                                                		for (int n=0; n<maxsize; n++) 
 								{
-                                                                        	double change = (cube[i][j][k] - cube[l][m][n]) * DTerm;
-                                                                        	cube[i][j][k] = cube[i][j][k] - change;
-                                                                        	cube[l][m][n] = cube[l][m][n] + change;
-                                                                }
+                                                        		if (    ( ( i == l )   && ( j == m )   && ( k == n+1) ) ||
+                                                                		( ( i == l )   && ( j == m )   && ( k == n-1) ) ||
+                                                                		( ( i == l )   && ( j == m+1 ) && ( k == n)   ) ||
+                                                                		( ( i == l )   && ( j == m-1 ) && ( k == n)   ) ||
+                                                                		( ( i == l+1 ) && ( j == m )   && ( k == n)   ) ||
+                                                                		( ( i == l-1 ) && ( j == m )   && ( k == n)   ) ) 
+									{
+                                                                        		double change = (cube[i][j][k] - cube[l][m][n]) * DTerm;
+                                                                        		cube[i][j][k] = cube[i][j][k] - change;
+                                                                        		cube[l][m][n] = cube[l][m][n] + change;
+                                                                	}
+								}
 							}
 						}
 					}
 				}
 			}
-		}
 
-		time = time + timestep;
+			time = time + timestep;
 
-        	double sumval = 0.0;
-        	double maxval = cube[0][0][0];
-        	double minval = cube[0][0][0];
-        	for (int i=0; i<maxsize; i++) 
-		{
-                	for (int j=0; j<maxsize; j++) 
+        		double sumval = 0.0;
+        		double maxval = cube[0][0][0];
+        		double minval = cube[0][0][0];
+        		for (int i=0; i<maxsize; i++) 
 			{
-                        	for (int k=0; k<maxsize; k++) 
+                		for (int j=0; j<maxsize; j++) 
 				{
-                                	maxval = max(cube[i][j][k],maxval);
-                                	minval = min(cube[i][j][k],minval);
-                                	sumval += cube[i][j][k];
+                        		for (int k=0; k<maxsize; k++) 
+					{
+                                		maxval = max(cube[i][j][k],maxval);
+                                		minval = min(cube[i][j][k],minval);
+                                		sumval += cube[i][j][k];
 
+					}
+				}
+			}
+
+                	ratio = minval / maxval;
+
+                	cout << ratio << " time = " << time << "\n";
+
+                	cout << time << " " << cube[0][0][0] ;
+                	cout <<        " " << cube[maxsize-1][0][0] ;
+                	cout <<        " " << cube[maxsize-1][maxsize-1][0] ;
+                	cout <<        " " << cube[maxsize-1][maxsize-1][maxsize-1] ;
+        	        cout <<        " " << sumval << "\n";
+		} while ( ratio < 0.99 );
+	}
+	else //partition
+	{
+
+		int*** bitmap =  new int** [maxsize];
+
+		//allocating memory
+        	for (int i = 0; i < maxsize; ++i)
+        	{
+                	bitmap[i] = new int* [maxsize];
+                	for (int j = 0; j < maxsize; j++)
+                	{
+                	        bitmap[i][j] = new int [maxsize];
+                	}
+        	}
+
+
+		//zero the walls and partition of the bitmap
+		for (int i = 0; i < maxsize; i++) 
+		{
+                        for (int j = 0; j < maxsize; j++) 
+			{
+                                for (int k = 0; k < maxsize; k++) 
+				{
+						// zero the partition
+					if((i == (maxsize)/2) && (j >= 1 + (maxsize * .25)))
+						bitmap[i][j][k] = 0;
+					else
+						bitmap[i][j][k] = 1;
 				}
 			}
 		}
 
-                ratio = minval / maxval;
-
-                cout << ratio << " time = " << time << "\n";
-
-                cout << time << " " << cube[0][0][0] ;
-                cout <<        " " << cube[maxsize-1][0][0] ;
-                cout <<        " " << cube[maxsize-1][maxsize-1][0] ;
-                cout <<        " " << cube[maxsize-1][maxsize-1][maxsize-1] ;
-                cout <<        " " << sumval << "\n";
-	} while ( ratio < 0.99 );
 
 
-		cout << "Box equilibrated in " << time << " seconds of simulated time.";
+
+                do {
+
+                        for (int i=0; i<maxsize; i++)
+                        {
+                                for (int j=0; j<maxsize; j++)
+                                {
+                                        for (int k=0; k<maxsize; k++)
+                                        {
+                                                for (int l=0; l<maxsize; l++)
+                                                {
+                                                        for (int m=0; m<maxsize; m++)
+                                                        {
+                                                                for (int n=0; n<maxsize; n++)
+                                                                {
 
 
-	//deallocating memeory
-	for (int i=0; i<maxsize; i++ ) 
+									if(bitmap[i][j][k] == 1 && bitmap[l][m][n] == 1)
+									{
+                                                                        	if (    ( ( i == l )   && ( j == m )   && ( k == n+1) ) ||
+                                                                                	( ( i == l )   && ( j == m )   && ( k == n-1) ) ||
+                                                                                	( ( i == l )   && ( j == m+1 ) && ( k == n)   ) ||
+                                                                                	( ( i == l )   && ( j == m-1 ) && ( k == n)   ) ||
+                                                                                	( ( i == l+1 ) && ( j == m )   && ( k == n)   ) ||
+                                                                                	( ( i == l-1 ) && ( j == m )   && ( k == n)   ) )
+                                                                        	{
+                                                                                	        double change = (cube[i][j][k] - cube[l][m][n]) * DTerm;
+                                                                                	        cube[i][j][k] = cube[i][j][k] - change;
+                                                                                	        cube[l][m][n] = cube[l][m][n] + change;
+                                                                        	}
+									}
+                                                                }
+                                                        }
+                                                }
+                                        }
+                                }
+                        }
+
+                        time = time + timestep;
+
+                        double sumval = 0.0;
+                        double maxval = cube[0][0][0];
+                        double minval = cube[0][0][0];
+                        for (int i=0; i<maxsize; i++)
+                        {
+                                for (int j=0; j<maxsize; j++)
+                                {
+                                        for (int k=0; k<maxsize; k++)
+                                        {
+						if(bitmap[i][j][k] == 1)
+						{
+                                                maxval = max(cube[i][j][k],maxval);
+                                                minval = min(cube[i][j][k],minval);
+                                                sumval += cube[i][j][k];
+						}
+                                        }
+                                }
+                        }
+
+
+
+                        ratio = minval / maxval;
+
+                        cout << ratio << " time = " << time << "\n";
+
+                        cout << time << " " << cube[0][0][0] ;
+                        cout <<        " " << cube[maxsize-1][0][0] ;
+                        cout <<        " " << cube[maxsize-1][maxsize-1][0] ;
+                        cout <<        " " << cube[maxsize-1][maxsize-1][maxsize-1] ;
+                        cout <<        " " << sumval << "\n";
+                } while ( ratio < 0.99 );
+
+
+        	//deallocating memeory from bitmap
+		for (int i = 0; i < maxsize; i++ )
+		{
+			for (int j = 0; j < maxsize; j++ )
+			{
+				delete[] bitmap[i][j];
+                	}
+                	delete[] bitmap[i];
+        	}
+        
+        	delete[] bitmap;
+
+
+	}
+
+
+
+	cout << "Box equilibrated in " << time << " seconds of simulated time.";
+
+
+	//deallocating memory to cube
+	for (int i = 0; i< maxsize; i++ ) 
 	{
-	        for (int j=0; j<maxsize; j++ ) 
+	        for (int j = 0; j < maxsize; j++ ) 
 		{
         	    	delete[] cube[i][j];
         	}
         	delete[] cube[i];
     	}
+
     	delete[] cube;
 
 
