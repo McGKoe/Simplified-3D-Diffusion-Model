@@ -100,6 +100,7 @@ else:
 					for l in range(0, maxsize):
 						for m in range(0, maxsize):
 							for n in range(0, maxsize):
+								#if (i,j,k) AND (l,m,n) are able to be diffused into
 								if bitmap[i,j,k] == 1 and bitmap[l,m,n] == 1:
 
 									if( (i == l and j == m and k == n+1) or
