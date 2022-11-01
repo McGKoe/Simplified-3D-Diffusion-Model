@@ -169,7 +169,7 @@ int main()
                                 for (int k = 0; k < maxsize; k++) 
 				{
 						// zero the partition
-					if((i == (maxsize)/2) && (j >= 1 + (maxsize * .25)))
+					if((k == (maxsize)/2) && (j >= (maxsize * .5)))
 						bitmap[i][j][k] = 0;
 					else
 						bitmap[i][j][k] = 1;
