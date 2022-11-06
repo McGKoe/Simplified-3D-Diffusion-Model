@@ -83,7 +83,7 @@ else:
 	for i in range(0,maxsize):
 		for j in range(0,maxsize):
 			for k in range(0,maxsize):
-				if i == int(maxsize/2) and j >= 1 + (maxsize * .25):
+				if k == int(maxsize/2) and j >= 1 + (maxsize * .25):
 					bitmap[i,j,k] = 0
 				else:
 					bitmap[i,j,k] = 1
