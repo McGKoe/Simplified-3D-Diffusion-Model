@@ -6,13 +6,18 @@
 
 	(defvar maxsize)
 
-
+	(defvar answer)
 	
 
 	;; takes in the nuber of divisions in the room
 	(princ "Number of divisions: ")
 	(terpri)
 	(setf maxsize (read))
+
+	(princ "With partition? (y/n) ")
+	(terpri)
+	(setf answer (read-char))
+
 
 
 	(defvar cube)
@@ -34,7 +39,6 @@
 
 	(defvar DTerm (/ (* diffusion_coef timestep) (* distance_bw distance_bw)))
 
-	(princ DTerm)
 
 
 
@@ -53,76 +57,81 @@
 
 	(defvar change)
 
-	(loop while (< ratioo 0.99)
-		do
 
-			(loop for i from 0 below maxsize do
-				(loop for j from 0 below maxsize do
-					(loop for k from 0 below maxsize do
-						(loop for l from 0 below maxsize do
-							(loop for m from 0 below maxsize do
-								(loop for n from 0 below maxsize do
+	(if (char-equal answer #\n)
+		(progn
+		(write "NO PArition")
+
+		(loop while (< ratioo 0.99)
+			do
+
+				(loop for i from 0 below maxsize do
+					(loop for j from 0 below maxsize do
+						(loop for k from 0 below maxsize do
+							(loop for l from 0 below maxsize do
+								(loop for m from 0 below maxsize do
+									(loop for n from 0 below maxsize do
 								
-									(if (and (= i l) (and (= j m) (= k (+ n 1))))
-									(progn	
-										(setf change (* DTerm (- (aref cube i j k) (aref cube l m n))))
-
-										(setf (aref cube i j k) (- (aref cube i j k) change))
-
-										(setf (aref cube l m n) (+ (aref cube l m n) change))
-									)
+										(if (and (= i l) (and (= j m) (= k (+ n 1))))
+										(progn	
+											(setf change (* DTerm (- (aref cube i j k) (aref cube l m n))))
+	
+											(setf (aref cube i j k) (- (aref cube i j k) change))
+		
+											(setf (aref cube l m n) (+ (aref cube l m n) change))
+										)
 										
-									)
-									(if (and (= i l) (and (= j m) (= k (- n 1))))
-                                                                        (progn
-                                                                               (setf change (* DTerm (- (aref cube i j k) (aref cube l m n))))
+										)
+										(if (and (= i l) (and (= j m) (= k (- n 1))))
+                                                        	                (progn
+                                                                	               (setf change (* DTerm (- (aref cube i j k) (aref cube l m n))))
 
-                                                                                (setf (aref cube i j k) (- (aref cube i j k) change))
+                                                                        	        (setf (aref cube i j k) (- (aref cube i j k) change))
 
-                                                                                (setf (aref cube l m n) (+ (aref cube l m n) change))
-                                                                        )
+                                                                                	(setf (aref cube l m n) (+ (aref cube l m n) change))
+                                                                       		)
                                                                                 
-                                                                        )
-									(if (and (= i l) (and (= k n) (= j (+ m 1))))
-                                                                        (progn
-										(setf change (* DTerm (- (aref cube i j k) (aref cube l m n))))
+                                                                        	)
+										(if (and (= i l) (and (= k n) (= j (+ m 1))))
+                                                                        	(progn
+											(setf change (* DTerm (- (aref cube i j k) (aref cube l m n))))
 
-                                                                                (setf (aref cube i j k) (- (aref cube i j k) change))
+                                                                                	(setf (aref cube i j k) (- (aref cube i j k) change))
 
-                                                                                (setf (aref cube l m n) (+ (aref cube l m n) change))
-                                                                        )
+                                                                                	(setf (aref cube l m n) (+ (aref cube l m n) change))
+                                                                        	)
                                                                                 
-                                                                        )
-									(if (and (= i l) (and (= k n) (= j (- m 1))))
-                                                                        (progn
-										(setf change (* DTerm (- (aref cube i j k) (aref cube l m n))))
+                                                                        	)
+										(if (and (= i l) (and (= k n) (= j (- m 1))))
+                                                                	        (progn
+											(setf change (* DTerm (- (aref cube i j k) (aref cube l m n))))
 
-                                                                                (setf (aref cube i j k) (- (aref cube i j k) change))
+                                                        	                        (setf (aref cube i j k) (- (aref cube i j k) change))
+	
+        	                                                                        (setf (aref cube l m n) (+ (aref cube l m n) change))
+                	                                                        )
+                        	                                                        
+                                	                                        )
+										(if (and (= j m) (and (= k n) (= i (+ l 1))))
+                                                	                        (progn
+											(setf change (* DTerm (- (aref cube i j k) (aref cube l m n))))
 
-                                                                                (setf (aref cube l m n) (+ (aref cube l m n) change))
-                                                                        )
+                                                                	                (setf (aref cube i j k) (- (aref cube i j k) change))
+
+                                                                        	        (setf (aref cube l m n) (+ (aref cube l m n) change))
+                                                                        	)
                                                                                 
-                                                                        )
-									(if (and (= j m) (and (= k n) (= i (+ l 1))))
-                                                                        (progn
-										(setf change (* DTerm (- (aref cube i j k) (aref cube l m n))))
+                                                                        	)
+										(if (and (= k n) (and (= j m) (= i (- l 1))))
+                                	                                        (progn
+											(setf change (* DTerm (- (aref cube i j k) (aref cube l m n))))
 
-                                                                                (setf (aref cube i j k) (- (aref cube i j k) change))
+                         	                                                       (setf (aref cube i j k) (- (aref cube i j k) change))
 
-                                                                                (setf (aref cube l m n) (+ (aref cube l m n) change))
-                                                                        )
+                                                	                                (setf (aref cube l m n) (+ (aref cube l m n) change))
+                                                        	                )
                                                                                 
-                                                                        )
-									(if (and (= k n) (and (= j m) (= i (- l 1))))
-                                                                        (progn
-										(setf change (* DTerm (- (aref cube i j k) (aref cube l m n))))
-
-                                                                                (setf (aref cube i j k) (- (aref cube i j k) change))
-
-                                                                                (setf (aref cube l m n) (+ (aref cube l m n) change))
-                                                                        )
-                                                                                
-                                                                        )
+                                                                	        )
 
 				
 
@@ -130,57 +139,247 @@
 
 
 
+									)
 								)
 							)
 						)
 					)
 				)
-			)
 
-		(setf keeptime (+ keeptime timestep))
+			(setf keeptime (+ keeptime timestep))
 		
 
-		(setf sumval 0.0)
-		(setf maxval (aref cube 0 0 0))
-		(setf minval (aref cube 0 0 0))
+			(setf sumval 0.0)
+			(setf maxval (aref cube 0 0 0))
+			(setf minval (aref cube 0 0 0))
 
-		(loop for i from 0 below maxsize do
-			(loop for j from 0 below maxsize do
-				(loop for k from 0 below maxsize do
+			(loop for i from 0 below maxsize do
+				(loop for j from 0 below maxsize do
+					(loop for k from 0 below maxsize do
 				
-				(setf maxval (max (aref cube i j k) maxval))
-				(setf minval (min (aref cube i j k) minval))
+					(setf maxval (max (aref cube i j k) maxval))
+					(setf minval (min (aref cube i j k) minval))
 
 
-				(setf sumval (+ sumval (aref cube i j k)))
+					(setf sumval (+ sumval (aref cube i j k)))
 
 
 
+					)
 				)
 			)
-		)
 
-		(setf ratioo (/ minval maxval))
+			(setf ratioo (/ minval maxval))
 
-		(princ "Ratio:" )
-		(write ratioo)
-		(print " time ")
-		(princ keeptime)
+			(princ "Ratio:" )
+			(write ratioo)
+			(print " time ")
+			(princ keeptime)
 
-		(print (aref cube 0 0 0))
-		(princ " ")
-		(princ (aref cube (- maxsize 1) 0 0))
-                (princ " ")
-                (princ (aref cube (- maxsize 1) (- maxsize 1) 0))
-                (princ " ")
-                (princ (aref cube (- maxsize 1) (- maxsize 1) (- maxsize 1)))
-                (princ " ")
-		(princ sumval)
-		(terpri)
+			(print (aref cube 0 0 0))
+			(princ " ")
+			(princ (aref cube (- maxsize 1) 0 0))
+        	        (princ " ")
+                	(princ (aref cube (- maxsize 1) (- maxsize 1) 0))
+                	(princ " ")
+                	(princ (aref cube (- maxsize 1) (- maxsize 1) (- maxsize 1)))
+                	(princ " ")
+			(princ sumval)
+			(terpri)
 		
 
 
 	)
+	)
+
+	(progn 
+		(defvar bitmap)
+	
+
+		;;initializes the map that will hold the partition
+		(setf bitmap (make-array (list maxsize maxsize maxsize) :initial-element 1))
+
+
+		;;fills array with ones except for the partition
+		(loop for i from 0 below maxsize do
+			(write i)
+			(loop for j from 0 below maxsize do
+				(loop for k from 0 below maxsize do
+				(if (= (round (/ maxsize 2)) i)
+					(progn
+						(if (>= j (round (+ 1 (* maxsize .25))))
+							(setf (aref bitmap i j k) 0)
+							(setf (aref bitmap i j k) 1)
+
+
+						)
+					)
+				)			
+				;;	(if (and (>= j (round (+ 1 (* maxsize .25)))) (= (round (/ maxsize 2) i)))
+				;;		(setf (aref bitmap i j k) 0)
+				;;		(setf (aref bitmap i j k) 1)
+				;;	)
+				
+				)
+			)
+		)
+
+		(loop for i from 0 below maxsize do
+			(write i)
+			(terpri)
+			(loop for j from 0 below maxsize do
+
+				(terpri)
+				(loop for k from 0 below maxsize do
+								
+						(write (aref bitmap i j k))
+				
+				)
+			)
+			(terpri)
+		)
+
+
+
+
+		(write "PArtition")
+		(loop while (< ratioo 0.99)
+			do
+
+				(loop for i from 0 below maxsize do
+					(loop for j from 0 below maxsize do
+						(loop for k from 0 below maxsize do
+							(loop for l from 0 below maxsize do
+								(loop for m from 0 below maxsize do
+									(loop for n from 0 below maxsize do
+
+									(if (and (= (aref bitmap i j k ) 1) (= (aref bitmap l m n) 1))							
+										(progn
+										(if (and (= i l) (and (= j m) (= k (+ n 1))))
+										(progn	
+											(setf change (* DTerm (- (aref cube i j k) (aref cube l m n))))
+	
+											(setf (aref cube i j k) (- (aref cube i j k) change))
+		
+											(setf (aref cube l m n) (+ (aref cube l m n) change))
+										)
+										
+										)
+										(if (and (= i l) (and (= j m) (= k (- n 1))))
+                                                        	                (progn
+                                                                	               (setf change (* DTerm (- (aref cube i j k) (aref cube l m n))))
+
+                                                                        	        (setf (aref cube i j k) (- (aref cube i j k) change))
+
+                                                                                	(setf (aref cube l m n) (+ (aref cube l m n) change))
+                                                                       		)
+                                                                                
+                                                                        	)
+										(if (and (= i l) (and (= k n) (= j (+ m 1))))
+                                                                        	(progn
+											(setf change (* DTerm (- (aref cube i j k) (aref cube l m n))))
+
+                                                                                	(setf (aref cube i j k) (- (aref cube i j k) change))
+
+                                                                                	(setf (aref cube l m n) (+ (aref cube l m n) change))
+                                                                        	)
+                                                                                
+                                                                        	)
+										(if (and (= i l) (and (= k n) (= j (- m 1))))
+                                                                	        (progn
+											(setf change (* DTerm (- (aref cube i j k) (aref cube l m n))))
+
+                                                        	                        (setf (aref cube i j k) (- (aref cube i j k) change))
+	
+        	                                                                        (setf (aref cube l m n) (+ (aref cube l m n) change))
+                	                                                        )
+                        	                                                        
+                                	                                        )
+										(if (and (= j m) (and (= k n) (= i (+ l 1))))
+                                                	                        (progn
+											(setf change (* DTerm (- (aref cube i j k) (aref cube l m n))))
+
+                                                                	                (setf (aref cube i j k) (- (aref cube i j k) change))
+
+                                                                        	        (setf (aref cube l m n) (+ (aref cube l m n) change))
+                                                                        	)
+                                                                                
+                                                                        	)
+										(if (and (= k n) (and (= j m) (= i (- l 1))))
+                                	                                        (progn
+											(setf change (* DTerm (- (aref cube i j k) (aref cube l m n))))
+
+                         	                                                       (setf (aref cube i j k) (- (aref cube i j k) change))
+
+                                                	                                (setf (aref cube l m n) (+ (aref cube l m n) change))
+                                                        	                )
+                                                                                
+                                                                	        )
+
+										);;end of progn
+										)
+
+				
+
+
+
+
+
+									)
+								)
+							)
+						)
+					)
+				)
+
+			(setf keeptime (+ keeptime timestep))
+		
+
+			(setf sumval 0.0)
+			(setf maxval (aref cube 0 0 0))
+			(setf minval (aref cube 0 0 0))
+
+			(loop for i from 0 below maxsize do
+				(loop for j from 0 below maxsize do
+					(loop for k from 0 below maxsize do
+				
+					(if (= (aref bitmap i j k) 1)
+						(progn	
+						(setf maxval (max (aref cube i j k) maxval))
+						(setf minval (min (aref cube i j k) minval))
+
+
+						(setf sumval (+ sumval (aref cube i j k)))
+						)
+					)
+
+					)
+				)
+			)
+
+			(setf ratioo (/ minval maxval))
+
+			(princ "Ratio:" )
+			(write ratioo)
+			(print " time ")
+			(princ keeptime)
+
+			(print (aref cube 0 0 0))
+			(princ " ")
+			(princ (aref cube (- maxsize 1) 0 0))
+        	        (princ " ")
+                	(princ (aref cube (- maxsize 1) (- maxsize 1) 0))
+                	(princ " ")
+                	(princ (aref cube (- maxsize 1) (- maxsize 1) (- maxsize 1)))
+                	(princ " ")
+			(princ sumval)
+			(terpri)
+		
+
+		)
+	)
+
+)
 
 	(print "Box equilibrated in ")
 	(princ keeptime)
