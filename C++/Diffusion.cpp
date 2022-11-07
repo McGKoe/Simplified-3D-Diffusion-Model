@@ -148,31 +148,39 @@ int main()
 	else //partition
 	{
 
-		int*** bitmap =  new int** [maxsize];
+		int*** bitmap =  new int** [maxsize + 2];
 
 		//allocating memory
-        	for (int i = 0; i < maxsize; ++i)
+        	for (int i = 0; i < maxsize + 2; ++i)
         	{
-                	bitmap[i] = new int* [maxsize];
-                	for (int j = 0; j < maxsize; j++)
+                	bitmap[i] = new int* [maxsize + 2];
+                	for (int j = 0; j < maxsize + 2; j++)
                 	{
-                	        bitmap[i][j] = new int [maxsize];
+                	        bitmap[i][j] = new int [maxsize + 2];
                 	}
         	}
 
 
 		//zero the walls and partition of the bitmap
-		for (int i = 0; i < maxsize; i++) 
+		for (int i = 0; i < maxsize + 2; i++) 
 		{
-                        for (int j = 0; j < maxsize; j++) 
+                        for (int j = 0; j < maxsize + 2; j++) 
 			{
-                                for (int k = 0; k < maxsize; k++) 
-				{
-						// zero the partition
-					if((k == (maxsize)/2) && (j >= (maxsize * .5)))
+                                for (int k = 0; k < maxsize + 2; k++) 
+				{	if(i == 0 || j == 0 || k == 0)
 						bitmap[i][j][k] = 0;
+
+					else if( i == maxsize+1 || j == maxsize+1 || k == maxsize+1)
+						bitmap[i][j][k] = 0;
+
+
+					else if(i == round(maxsize/2) && j >= (maxsize * .25))
+						bitmap[i][j][k] = 0;
+					
 					else
 						bitmap[i][j][k] = 1;
+
+						// zero the partition
 				}
 			}
 		}
@@ -196,7 +204,7 @@ int main()
                                                                 {
 
 
-									if(bitmap[i][j][k] == 1 && bitmap[l][m][n] == 1)
+									if(bitmap[i + 1][j + 1][k + 1] == 1 && bitmap[l + 1][m + 1][n + 1] == 1)
 									{
                                                                         	if (    ( ( i == l )   && ( j == m )   && ( k == n+1) ) ||
                                                                                 	( ( i == l )   && ( j == m )   && ( k == n-1) ) ||
@@ -228,7 +236,7 @@ int main()
                                 {
                                         for (int k=0; k<maxsize; k++)
                                         {
-						if(bitmap[i][j][k] == 1)
+						if(bitmap[i + 1][j+1][k+1] == 1)
 						{
                                                 maxval = max(cube[i][j][k],maxval);
                                                 minval = min(cube[i][j][k],minval);
