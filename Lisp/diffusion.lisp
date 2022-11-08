@@ -197,24 +197,59 @@
 	
 
 		;;initializes the map that will hold the partition
-		(setf bitmap (make-array (list maxsize maxsize maxsize) :initial-element 1))
+		(setf bitmap (make-array (list (+ 2 maxsize) (+ 2 maxsize) (+ 2 maxsize)) :initial-element 1))
 
 
 		;;fills array with ones except for the partition
-		(loop for i from 0 below maxsize do
+		(loop for i from 0 below (+ 2 maxsize) do
 			(write i)
-			(loop for j from 0 below maxsize do
-				(loop for k from 0 below maxsize do
-				(if (= (round (/ maxsize 2)) i)
+			(loop for j from 0 below (+ 2 maxsize) do
+				(loop for k from 0 below (+ 2 maxsize) do
+				(if (= (round (/ (+ 2 maxsize) 2)) i)
 					(progn
-						(if (>= j (round (+ 1 (* maxsize .25))))
+						(if (>= j (floor (+ 1 (* (+ 2 maxsize) .25))))
 							(setf (aref bitmap i j k) 0)
 							(setf (aref bitmap i j k) 1)
 
 
 						)
 					)
-				)			
+				)	
+
+				(if ( = 0 i)
+					(setf (aref bitmap i j k) 0)
+
+				)
+			
+				(if ( = 0 j)
+					(setf (aref bitmap i j k) 0)
+
+				)
+
+				(if ( = 0 k)
+					(setf (aref bitmap i j k) 0)
+
+				)
+	
+				(if ( = 0 i)
+					(setf (aref bitmap i j k) 0)
+
+				)
+
+
+				(if ( = (+ 1 maxsize) i)
+					(setf (aref bitmap i j k) 0)
+
+				)
+				(if ( = (+ 1 maxsize) j)
+					(setf (aref bitmap i j k) 0)
+
+				)
+				(if ( = (+ 1 maxsize) k)
+					(setf (aref bitmap i j k) 0)
+
+				)
+		
 				;;	(if (and (>= j (round (+ 1 (* maxsize .25)))) (= (round (/ maxsize 2) i)))
 				;;		(setf (aref bitmap i j k) 0)
 				;;		(setf (aref bitmap i j k) 1)
@@ -224,13 +259,13 @@
 			)
 		)
 
-		(loop for i from 0 below maxsize do
+		(loop for i from 0 below (+ 2 maxsize) do
 			(write i)
 			(terpri)
-			(loop for j from 0 below maxsize do
+			(loop for j from 0 below (+ 2 maxsize) do
 
 				(terpri)
-				(loop for k from 0 below maxsize do
+				(loop for k from 0 below (+ 2 maxsize) do
 								
 						(write (aref bitmap i j k))
 				
@@ -253,7 +288,7 @@
 								(loop for m from 0 below maxsize do
 									(loop for n from 0 below maxsize do
 
-									(if (and (= (aref bitmap i j k ) 1) (= (aref bitmap l m n) 1))							
+									(if (and (= (aref bitmap (+ 1 i) (+ 1 j) (+ 1 k)) 1) (= (aref bitmap (+ 1 l) (+ 1 m) (+ 1 n)) 1))							
 										(progn
 										(if (and (= i l) (and (= j m) (= k (+ n 1))))
 										(progn	
@@ -343,7 +378,7 @@
 				(loop for j from 0 below maxsize do
 					(loop for k from 0 below maxsize do
 				
-					(if (= (aref bitmap i j k) 1)
+					(if (= (aref bitmap (+ 1 i) (+ 1 j) (+ 1 k)) 1)
 						(progn	
 						(setf maxval (max (aref cube i j k) maxval))
 						(setf minval (min (aref cube i j k) minval))
