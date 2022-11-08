@@ -173,8 +173,7 @@ int main()
 					else if( i == maxsize+1 || j == maxsize+1 || k == maxsize+1)
 						bitmap[i][j][k] = 0;
 
-
-					else if(i == round(maxsize/2) && j >= (maxsize * .25))
+					else if((i == round((maxsize + 2)/2)) && j >= floor((maxsize + 2) * .25  + 1))
 						bitmap[i][j][k] = 0;
 					
 					else
