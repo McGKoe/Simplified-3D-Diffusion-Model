@@ -6,6 +6,7 @@ use std::io;
 
 fn main() {
 	
+	println!("Number of divisions: ");
 	let mut user_input = String::new();
 	let stdin = io::stdin();
 
