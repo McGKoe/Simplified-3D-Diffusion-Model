@@ -77,13 +77,17 @@ if not partition:
 else:
 
 	#creates and oneses the bitmap
-	bitmap = ones((maxsize, maxsize, maxsize), dtype=float64)
+	bitmap = ones((maxsize + 2, maxsize + 2, maxsize + 2), dtype=float64)
 
 	#zero the partition of the bitmap
-	for i in range(0,maxsize):
-		for j in range(0,maxsize):
-			for k in range(0,maxsize):
-				if k == int(maxsize/2) and j >= 1 + (maxsize * .25):
+	for i in range(0,maxsize + 2):
+		for j in range(0,maxsize + 2):
+			for k in range(0,maxsize + 2):
+				if i == floor((maxsize + 2 )/2) and j >= floor((maxsize + 2) * .25 + 1):
+					bitmap[i,j,k] = 0
+				elif i == 0 or j == 0 or k == 0:
+					bitmap[i,j,k] = 0
+				elif i == maxsize + 1 or j == maxsize + 1 or k == maxsize + 1:
 					bitmap[i,j,k] = 0
 				else:
 					bitmap[i,j,k] = 1
@@ -101,7 +105,7 @@ else:
 						for m in range(0, maxsize):
 							for n in range(0, maxsize):
 								#if (i,j,k) AND (l,m,n) are able to be diffused into
-								if bitmap[i,j,k] == 1 and bitmap[l,m,n] == 1:
+								if bitmap[i + 1,j+1,k+1] == 1 and bitmap[l+1,m+1,n+1] == 1:
 
 									if( (i == l and j == m and k == n+1) or
 									(i == l and j == m and k == n-1) or
@@ -122,7 +126,7 @@ else:
 		for i in range(0, maxsize):
 			for j in range(0, maxsize):
 				for k in range(0, maxsize):
-					if bitmap[i,j,k] == 1:
+					if bitmap[i+1,j+1,k+1] == 1:
 						maxval = max(cube[i][j][k], maxval)
 						minval = min(cube[i][j][k], minval)
 						sumval = sumval + cube[i][j][k]
