@@ -60,7 +60,6 @@
 
 	(if (char-equal answer #\n)
 		(progn
-		(write "NO PArition")
 
 		(loop while (< ratioo 0.99)
 			do
@@ -146,6 +145,7 @@
 					)
 				)
 
+			;; increment time
 			(setf keeptime (+ keeptime timestep))
 		
 
@@ -153,6 +153,8 @@
 			(setf maxval (aref cube 0 0 0))
 			(setf minval (aref cube 0 0 0))
 
+			;;find min and max of cube
+			;;
 			(loop for i from 0 below maxsize do
 				(loop for j from 0 below maxsize do
 					(loop for k from 0 below maxsize do
@@ -250,34 +252,15 @@
 
 				)
 		
-				;;	(if (and (>= j (round (+ 1 (* maxsize .25)))) (= (round (/ maxsize 2) i)))
-				;;		(setf (aref bitmap i j k) 0)
-				;;		(setf (aref bitmap i j k) 1)
-				;;	)
 				
 				)
 			)
 		)
 
-		(loop for i from 0 below (+ 2 maxsize) do
-			(write i)
-			(terpri)
-			(loop for j from 0 below (+ 2 maxsize) do
-
-				(terpri)
-				(loop for k from 0 below (+ 2 maxsize) do
-								
-						(write (aref bitmap i j k))
-				
-				)
-			)
-			(terpri)
-		)
 
 
 
 
-		(write "PArtition")
 		(loop while (< ratioo 0.99)
 			do
 
@@ -374,6 +357,8 @@
 			(setf maxval (aref cube 0 0 0))
 			(setf minval (aref cube 0 0 0))
 
+
+			;; find min and max of cube
 			(loop for i from 0 below maxsize do
 				(loop for j from 0 below maxsize do
 					(loop for k from 0 below maxsize do
