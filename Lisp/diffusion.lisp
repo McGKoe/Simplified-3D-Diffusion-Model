@@ -205,11 +205,11 @@
 			(write i)
 			(loop for j from 0 below (+ 2 maxsize) do
 				(loop for k from 0 below (+ 2 maxsize) do
-				(if (= (round (/ (+ 2 maxsize) 2)) i)
+				(if (= (floor (/ (+ 2 maxsize) 2)) i)
 					(progn
 						(if (>= j (floor (+ 1 (* (+ 2 maxsize) .25))))
 							(setf (aref bitmap i j k) 0)
-							(setf (aref bitmap i j k) 1)
+						;	(setf (aref bitmap i j k) 1)
 
 
 						)
