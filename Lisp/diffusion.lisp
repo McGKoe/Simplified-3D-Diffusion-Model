@@ -61,6 +61,7 @@
 	(if (char-equal answer #\n)
 		(progn
 
+
 		(loop while (< ratioo 0.99)
 			do
 
