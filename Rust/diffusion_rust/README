@@ -1,3 +1,0 @@
-To compile, switch into diffusion_rust directory, then type
-    cargo build
-    cargo run
