@@ -1,4 +1,4 @@
-To Compile and Run:
+To compile and run:
 
     c++ Diffusion.cpp
     ./a.out
