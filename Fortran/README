@@ -1,0 +1,3 @@
+To compile and run:
+    gfortran diffusion.f95
+    ./a.out
