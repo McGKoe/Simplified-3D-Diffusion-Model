@@ -11,13 +11,11 @@ fn main() {
 	let stdin = io::stdin();
 
 	stdin.read_line(&mut user_input).ok();
-	println!("input {} ", user_input);
 
 	println!("With partition? (y/n) ");
 	let mut input = String::new();
 	
 	stdin.read_line(&mut input).ok();
-	println!("input {} ", input);
 	
 	let partition = input.trim();
 
@@ -42,7 +40,6 @@ fn main() {
 
 
 	
-	println!("DTerm {} ", dterm);
 
 
 	//initialize first cell
